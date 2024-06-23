@@ -354,9 +354,17 @@ func decodeResponseFromReader(r io.Reader, reply interface{}) (err error) {
 		return jsonErr
 	}
 
-	if c.Params == nil {
+	if c.Params == nil || (c.Params.Result == nil && c.Params.Error == nil) {
 		return json2.ErrNullResult
 	}
+
+	if c.Params.Error != nil {
+		var errMessage string
+		json.Unmarshal(*c.Params.Error, &errMessage)
+
+		return fmt.Errorf("rpc error: %s", errMessage)
+	}
+
 
 	return json.Unmarshal(*c.Params.Result, &reply)
 }
@@ -378,9 +386,17 @@ func decodeResponseFromMessage(r []byte, reply interface{}) (err error) {
 		return jsonErr
 	}
 
-	if c.Params == nil {
+		if c.Params == nil || (c.Params.Result == nil && c.Params.Error == nil) {
 		return json2.ErrNullResult
 	}
+
+	if c.Params.Error != nil {
+		var errMessage string
+		json.Unmarshal(*c.Params.Error, &errMessage)
+
+		return fmt.Errorf("rpc error: %s", errMessage)
+	}
+
 
 	return json.Unmarshal(*c.Params.Result, &reply)
 }
