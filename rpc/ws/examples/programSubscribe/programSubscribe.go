@@ -18,9 +18,9 @@ import (
 	"context"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/gagliardetto/solana-go"
-	"github.com/gagliardetto/solana-go/rpc"
-	"github.com/gagliardetto/solana-go/rpc/ws"
+	"github.com/rmukhamet/solana-go"
+	"github.com/rmukhamet/solana-go/rpc"
+	"github.com/rmukhamet/solana-go/rpc/ws"
 )
 
 func main() {

@@ -17,7 +17,7 @@ package rpc
 import (
 	"context"
 
-	"github.com/gagliardetto/solana-go"
+	"github.com/rmukhamet/solana-go"
 )
 
 type GetBlockProductionResult struct {

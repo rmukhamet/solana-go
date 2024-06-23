@@ -25,8 +25,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gagliardetto/solana-go/rpc/jsonrpc"
 	"github.com/klauspost/compress/gzhttp"
+	"github.com/rmukhamet/solana-go/rpc/jsonrpc"
 )
 
 var (

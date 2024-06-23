@@ -15,8 +15,10 @@
 package ws
 
 import (
-	"github.com/gagliardetto/solana-go"
-	"github.com/gagliardetto/solana-go/rpc"
+	"context"
+
+	"github.com/rmukhamet/solana-go"
+	"github.com/rmukhamet/solana-go/rpc"
 )
 
 type AccountResult struct {
@@ -85,6 +87,17 @@ type AccountSubscription struct {
 
 func (sw *AccountSubscription) Recv() (*AccountResult, error) {
 	select {
+	case d := <-sw.sub.stream:
+		return d.(*AccountResult), nil
+	case err := <-sw.sub.err:
+		return nil, err
+	}
+}
+
+func (sw *AccountSubscription) RecvWithContext(ctx context.Context) (*AccountResult, error) {
+	select {
+	case <-ctx.Done():
+		return nil, ctx.Err()
 	case d := <-sw.sub.stream:
 		return d.(*AccountResult), nil
 	case err := <-sw.sub.err:
