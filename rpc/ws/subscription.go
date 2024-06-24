@@ -17,6 +17,8 @@
 
 package ws
 
+import "context"
+
 type Subscription struct {
 	req               *request
 	subID             uint64
@@ -50,6 +52,17 @@ func (s *Subscription) Recv() (interface{}, error) {
 	select {
 	case d := <-s.stream:
 		return d, nil
+	case err := <-s.err:
+		return nil, err
+	}
+}
+
+func (s *Subscription) RecvWithContext(ctx context.Context) (*SlotsUpdatesResult, error) {
+	select {
+	case <-ctx.Done():
+		return nil, ctx.Err()
+	case d := <-s.stream:
+		return d.(*SlotsUpdatesResult), nil
 	case err := <-s.err:
 		return nil, err
 	}
