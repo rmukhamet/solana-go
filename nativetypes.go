@@ -24,6 +24,7 @@ import (
 	"io"
 
 	bin "github.com/gagliardetto/binary"
+	"github.com/klauspost/compress/zstd"
 	"github.com/mostynb/zstdpool-freelist"
 	"github.com/mr-tron/base58"
 )
@@ -280,16 +281,17 @@ func (t *Data) UnmarshalJSON(data []byte) (err error) {
 		if err != nil {
 			return err
 		}
-		dec, err := zstdDecoderPool.Get(nil)
-		if err != nil {
-			return err
-		}
-		defer zstdDecoderPool.Put(dec)
+		// dec, err := zstdDecoderPool.Get(nil)
+		// if err != nil {
+		// 	return err
+		// }
+		var decoder, _ = zstd.NewReader(nil)
 
-		t.Content, err = dec.DecodeAll(rawBytes, nil)
+		t.Content, err = decoder.DecodeAll(rawBytes, nil)
 		if err != nil {
 			return err
 		}
+		// zstdDecoderPool.Put(dec)
 	default:
 		return fmt.Errorf("unsupported encoding %s", encodingString)
 	}
