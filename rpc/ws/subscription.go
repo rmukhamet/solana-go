@@ -46,7 +46,7 @@ func newSubscription(
 	}
 }
 
-func (s *Subscription) Recv(ctx) (interface{}, error) {
+func (s *Subscription) Recv() (interface{}, error) {
 	select {
 	case d := <-s.stream:
 		return d, nil
