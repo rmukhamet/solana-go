@@ -291,6 +291,7 @@ func (t *Data) UnmarshalJSON(data []byte) (err error) {
 		if err != nil {
 			return err
 		}
+		decoder.Close()
 		// zstdDecoderPool.Put(dec)
 	default:
 		return fmt.Errorf("unsupported encoding %s", encodingString)
