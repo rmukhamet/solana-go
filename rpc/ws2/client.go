@@ -80,11 +80,11 @@ func New(rpcURL string, logger Logger, maxConnections int, maxSubscriptions int)
 		for {
 			select {
 			case mErr := <-c.errorMessageCh:
-				logger.Error("received error from ws connection")
+				logger.Error("received error from ws connection", mErr.err.Error())
 
 				c.removeConnection(mErr.connectionID, mErr.subscriptions)
 
-				c.logger.Infof("removed connection id: %d:", mErr.connectionID)
+				c.logger.Infof("removed connection id: %d", mErr.connectionID)
 
 				// TODO: remove connect subscriptions from Client
 			}
@@ -173,6 +173,14 @@ func (c *Client) ConnectWithOptions(ctx context.Context, opt *Options) (err erro
 	return nil
 }
 
+func (c *Client) GetSubscriptions() map[uint64]struct{} {
+	sub := make(map[uint64]struct{}, len(c.subscriptionByID))
+	for k := range c.subscriptionByID {
+		sub[k] = struct{}{}
+	}
+	return sub
+}
+
 func (c *Client) addConnection(conn *Connection) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
@@ -246,7 +254,7 @@ func (c *Client) subscribe(
 			return fmt.Errorf("failed to subscribe: %w", err)
 		}
 
-		c.logger.Info("subscribed to ws", connID, reqID)
+		c.logger.Infof("subscribed: conn# %d, requestID: %d ", connID, reqID)
 
 		return nil
 	}
@@ -261,7 +269,7 @@ func (c *Client) subscribe(
 		return c.subscribe(ctx, params, conf, subscriptionMethod, unsubscribeMethod, decoderFunc)
 	}
 
-	return nil
+	return ErrReachedMaxConnectionsLimit
 }
 
 func decodeResponseFromReader(r io.Reader, reply interface{}) (err error) {
