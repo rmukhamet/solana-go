@@ -71,6 +71,9 @@ func New(rpcURL string, logger Logger, maxConnections int, maxSubscriptions int)
 		maxConnections:   maxConnections,
 		maxSubscriptions: maxSubscriptions,
 		logger:           logger,
+
+		receivedMessagesCh: make(chan MessageWS, 1000),
+		errorMessageCh:     make(chan MessageError, 500),
 	}
 
 	go func() {
@@ -89,6 +92,10 @@ func New(rpcURL string, logger Logger, maxConnections int, maxSubscriptions int)
 	}()
 
 	return c
+}
+
+func (c *Client) Messages() <-chan MessageWS {
+	return c.receivedMessagesCh
 }
 
 // Connect creates a new websocket client connecting to the provided endpoint.
