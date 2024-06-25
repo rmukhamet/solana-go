@@ -29,6 +29,16 @@ type Connection struct {
 	logger           Logger
 }
 
+func NewConnection(conn *websocket.Conn, maxSubscriptions int, logger Logger) *Connection {
+	return &Connection{
+		Conn:             conn,
+		maxSubscriptions: maxSubscriptions,
+		subscriptions:    make(map[uint64]SubscriptionMeta, maxSubscriptions),
+		requestIDSubID:   make(map[uint64]SubscriptionMeta),
+		logger:           logger,
+	}
+
+}
 func (c *Connection) ID() uint64 {
 	if c.id == 0 {
 		c.id = connectionID.Add(1)

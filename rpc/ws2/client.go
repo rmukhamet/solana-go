@@ -141,7 +141,7 @@ func (c *Client) ConnectWithOptions(ctx context.Context, opt *Options) (err erro
 		return err
 	}
 
-	conn := &Connection{Conn: connWS, maxSubscriptions: c.maxSubscriptions, logger: c.logger}
+	conn := NewConnection(connWS, c.maxSubscriptions, c.logger)
 
 	c.addConnection(conn)
 
