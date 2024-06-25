@@ -142,6 +142,7 @@ func (c *Client) receiveMessages() {
 				c.closeAllSubscription(err)
 				return
 			}
+
 			c.handleMessage(message)
 		}
 	}
@@ -169,6 +170,14 @@ func getUint64WithOk(data []byte, path ...string) (uint64, bool) {
 }
 
 func (c *Client) handleMessage(message []byte) {
+	/*
+		{
+			"jsonrpc": "2.0",
+			"result": 4649979757127370,
+			"id": 1
+		}
+	*/
+
 	// when receiving message with id. the result will be a subscription number.
 	// that number will be associated to all future message destine to this request
 
@@ -365,7 +374,6 @@ func decodeResponseFromReader(r io.Reader, reply interface{}) (err error) {
 		return fmt.Errorf("rpc error: %s", errMessage)
 	}
 
-
 	return json.Unmarshal(*c.Params.Result, &reply)
 }
 
@@ -386,7 +394,7 @@ func decodeResponseFromMessage(r []byte, reply interface{}) (err error) {
 		return jsonErr
 	}
 
-		if c.Params == nil || (c.Params.Result == nil && c.Params.Error == nil) {
+	if c.Params == nil || (c.Params.Result == nil && c.Params.Error == nil) {
 		return json2.ErrNullResult
 	}
 
@@ -396,7 +404,6 @@ func decodeResponseFromMessage(r []byte, reply interface{}) (err error) {
 
 		return fmt.Errorf("rpc error: %s", errMessage)
 	}
-
 
 	return json.Unmarshal(*c.Params.Result, &reply)
 }
