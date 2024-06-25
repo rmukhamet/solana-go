@@ -153,17 +153,6 @@ func (c *Client) ConnectWithOptions(ctx context.Context, opt *Options) (err erro
 		conn.SetPongHandler(func(string) error {
 			conn.SetReadDeadline(time.Now().Add(pongWait))
 
-			subscriptions := make([]uint64, 0, len(conn.subscriptions))
-			for sID := range conn.subscriptions {
-				subscriptions = append(subscriptions, sID)
-			}
-
-			c.errorMessageCh <- MessageError{
-				err:           err,
-				connectionID:  conn.ID(),
-				subscriptions: subscriptions,
-			}
-
 			return nil
 		})
 

@@ -10,6 +10,7 @@ import (
 	"github.com/gorilla/rpc/v2/json2"
 	"github.com/gorilla/websocket"
 	jsoniter "github.com/json-iterator/go"
+	"github.com/pkg/errors"
 	"github.com/rmukhamet/solana-go"
 )
 
@@ -53,6 +54,7 @@ func (c *Connection) sendPing(errorCh chan MessageError) {
 
 	c.SetWriteDeadline(time.Now().Add(writeWait))
 	if err := c.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
+		err = errors.Wrap(err, "unable to send ping")
 		subscriptions := make([]uint64, 0, len(c.subscriptions))
 		for sID := range c.subscriptions {
 			subscriptions = append(subscriptions, sID)
@@ -119,6 +121,7 @@ func (c *Connection) receiveMessages(ctx context.Context, receivedMessagesCh cha
 		default:
 			_, messageData, err := c.ReadMessage()
 			if err != nil {
+				err = errors.Wrap(err, "unable to read message")
 				// gen errror
 				subscriptions := make([]uint64, 0, len(c.subscriptions))
 				for sID := range c.subscriptions {
