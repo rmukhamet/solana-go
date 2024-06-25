@@ -211,7 +211,7 @@ func getUint64(data []byte, keys ...string) (val uint64, err error) {
 		return 0, e
 	}
 	if t != jsonparser.Number {
-		return 0, fmt.Errorf("Value is not a number: %s", string(v))
+		return 0, fmt.Errorf("value is not a number: %s", string(v))
 	}
 	return strconv.ParseUint(string(v), 10, 64)
 }
@@ -223,71 +223,6 @@ func getUint64WithOk(data []byte, path ...string) (uint64, bool) {
 	}
 	return 0, false
 }
-
-// func (c *Client) handleMessage(message []byte) {
-// 	// when receiving message with id. the result will be a subscription number.
-// 	// that number will be associated to all future message destine to this request
-
-// 	requestID, ok := getUint64WithOk(message, "id")
-// 	if ok {
-// 		subID, _ := getUint64WithOk(message, "result")
-// 		//c.handleNewSubscriptionMessage(requestID, subID)
-// 		return
-// 	}
-
-// 	subID, _ := getUint64WithOk(message, "params", "subscription")
-// 	c.handleSubscriptionMessage(subID, message)
-// }
-
-// func (c *Client) handleNewSubscriptionMessage(requestID, subID uint64) {
-// 	c.lock.Lock()
-// 	defer c.lock.Unlock()
-
-// 	callBack, found := c.subscriptionByRequestID[requestID]
-// 	if !found {
-// 		c.logger.Error("cannot find websocket message handler for a new stream.... this should not happen",
-// 			zap.Uint64("request_id", requestID),
-// 			zap.Uint64("subscription_id", subID),
-// 		)
-// 		return
-// 	}
-// 	callBack.subID = subID
-// 	c.subscriptionByWSSubID[subID] = callBack
-
-// 	return
-// }
-
-// func (c *Client) handleSubscriptionMessage(subID uint64, message []byte) {
-
-// 	c.lock.RLock()
-// 	sub, found := c.subscriptionByWSSubID[subID]
-// 	c.lock.RUnlock()
-// 	if !found {
-// 		c.logger.Error("unable to find subscription for ws message", zap.Uint64("subscription_id", subID))
-// 		return
-// 	}
-
-// 	// Decode the message using the subscription-provided decoderFunc.
-// 	result, err := sub.decoderFunc(message)
-// 	if err != nil {
-// 		fmt.Println("*****************************")
-// 		c.closeSubscription(sub.req.ID, fmt.Errorf("unable to decode client response: %w", err))
-// 		return
-// 	}
-
-// 	// this cannot be blocking or else
-// 	// we  will no read any other message
-// 	if len(sub.stream) >= cap(sub.stream) {
-// 		c.logger.Error("closing ws client subscription... not consuming fast en ought",
-// 			zap.Uint64("request_id", sub.req.ID),
-// 		)
-// 		c.closeSubscription(sub.req.ID, fmt.Errorf("reached channel max capacity %d", len(sub.stream)))
-// 		return
-// 	}
-
-// 	sub.stream <- result
-// 	return
-// }
 
 func (c *Client) subscribe(
 	ctx context.Context,
