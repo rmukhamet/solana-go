@@ -17,7 +17,7 @@ require (
 	github.com/daaku/go.zipexe v1.0.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.7 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/golang/protobuf v1.4.2 // indirect
+	github.com/golang/protobuf v1.5.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
@@ -36,14 +36,14 @@ require (
 	github.com/subosito/gotenv v1.2.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/net v0.21.0 // indirect
+	golang.org/x/net v0.26.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	google.golang.org/genproto v0.0.0-20200331122359-1ee6d9798940 // indirect
 	google.golang.org/grpc v1.28.0 // indirect
-	google.golang.org/protobuf v1.23.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/ini.v1 v1.51.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
@@ -56,7 +56,7 @@ require (
 	github.com/buger/jsonparser v1.1.1
 	github.com/davecgh/go-spew v1.1.1
 	github.com/fatih/color v1.17.0
-	github.com/google/go-cmp v0.5.2
+	github.com/google/go-cmp v0.6.0
 	github.com/gorilla/rpc v1.2.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/json-iterator/go v1.1.12
@@ -64,14 +64,14 @@ require (
 	github.com/logrusorgru/aurora v2.0.3+incompatible
 	github.com/mostynb/zstdpool-freelist v0.0.0-20201229113212-927304c0c3b1
 	github.com/mr-tron/base58 v1.2.0
-	github.com/onsi/gomega v1.10.1
+	github.com/onsi/gomega v1.33.1
 	github.com/pkg/errors v0.9.1
 	github.com/ryanuber/columnize v0.0.0-20160712163229-9b3edd62028f
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.7.1
 	github.com/streamingfast/logging v0.0.0-20230608130331-f22c91403091
-	github.com/stretchr/testify v1.8.1
+	github.com/stretchr/testify v1.9.0
 	go.mongodb.org/mongo-driver v1.15.1
 	go.opencensus.io v0.22.5 // indirect
 	go.uber.org/ratelimit v0.2.0
