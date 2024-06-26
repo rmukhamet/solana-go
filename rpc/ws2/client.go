@@ -202,9 +202,17 @@ func (c *Client) Close() {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 	c.connCtxCancel()
+	var wg sync.WaitGroup
+
 	for _, conn := range c.connections {
-		go conn.Close()
+		wg.Add(1)
+		go func() {
+			conn.Close()
+			wg.Done()
+		}()
 	}
+	wg.Wait()
+	close(c.receivedMessagesCh)
 }
 
 // GetUint64 returns the value retrieved by `Get`, cast to a uint64 if possible.
