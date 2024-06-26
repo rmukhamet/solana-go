@@ -95,6 +95,7 @@ func New(rpcURL string, logger Logger, maxConnections int, maxSubscriptions int)
 }
 
 func (c *Client) Messages() <-chan MessageWS {
+
 	return c.receivedMessagesCh
 }
 

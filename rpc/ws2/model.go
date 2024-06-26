@@ -3,6 +3,7 @@ package ws2
 import "github.com/rmukhamet/solana-go"
 
 type MessageWS struct {
+	Account            string
 	SubscriptionID     uint64
 	Data               []byte
 	ConnectionID       uint64

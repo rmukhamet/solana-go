@@ -15,6 +15,7 @@ import (
 )
 
 type SubscriptionMeta struct {
+	Account            string
 	UnsubscribeMethod  string
 	SubscriptionMethod string
 	Encoding           solana.EncodingType
@@ -168,8 +169,10 @@ func (c *Connection) receiveMessages(ctx context.Context, receivedMessagesCh cha
 			subscriptionMethod := c.subscriptions[subID].SubscriptionMethod
 
 			encoding := c.subscriptions[subID].Encoding
+			account := c.subscriptions[subID].Account
 
 			message := MessageWS{
+				Account:            account,
 				SubscriptionID:     subID,
 				Data:               data,
 				ConnectionID:       c.ID(),
@@ -223,6 +226,7 @@ func (c *Connection) Subscribe(
 		SubscriptionMethod: subscriptionMethod,
 		UnsubscribeMethod:  unsubscribeMethod,
 		Encoding:           encodingType,
+		Account:            params[0].(string),
 	}
 
 	return req.ID, nil
