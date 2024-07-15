@@ -304,6 +304,13 @@ type DataBytesOrJSON struct {
 	asJSON          stdjson.RawMessage
 }
 
+func (dt DataBytesOrJSON) Encoding() string {
+	return string(dt.rawDataEncoding)
+}
+func (dt DataBytesOrJSON) ZstdRaw() []byte {
+	return dt.asDecodedBinary.ZstdEncodedData
+}
+
 func DataBytesOrJSONFromBase64(stringBase64 string) (*DataBytesOrJSON, error) {
 	decodedData, err := base64.StdEncoding.DecodeString(stringBase64)
 	if err != nil {
