@@ -232,7 +232,7 @@ func (t Base58) String() string {
 type Data struct {
 	Content         []byte
 	Encoding        EncodingType
-	ZstdEncodedData []byte
+	ZstdEncodedData string
 }
 
 func (t Data) MarshalJSON() ([]byte, error) {
@@ -278,7 +278,7 @@ func (t *Data) UnmarshalJSON(data []byte) (err error) {
 			return err
 		}
 	case EncodingBase64Zstd:
-		t.ZstdEncodedData = []byte(contentString)
+		t.ZstdEncodedData = contentString
 		rawBytes, err := base64.StdEncoding.DecodeString(contentString)
 		if err != nil {
 			return err

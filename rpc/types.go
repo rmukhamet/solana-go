@@ -307,7 +307,7 @@ type DataBytesOrJSON struct {
 func (dt DataBytesOrJSON) Encoding() string {
 	return string(dt.rawDataEncoding)
 }
-func (dt DataBytesOrJSON) ZstdRaw() []byte {
+func (dt DataBytesOrJSON) ZstdRaw() string {
 	return dt.asDecodedBinary.ZstdEncodedData
 }
 
